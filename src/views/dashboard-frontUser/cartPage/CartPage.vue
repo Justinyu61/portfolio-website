@@ -166,7 +166,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/cartCss/cartPage";
-@import "src/assets/css/cartCss/stepper";
-@import "src/assets/css/cartCss/sameCssForCart";
+@use "@/assets/css/cartCss/cartPage.scss" as *;
+@use "@/assets/css/cartCss/stepper.scss" as *;
+@use "@/assets/css/cartCss/sameCssForCart.scss" as *;
 </style>

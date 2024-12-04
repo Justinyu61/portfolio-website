@@ -15,5 +15,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/userFooter/footer";
+@use "@/assets/css/userFooter/footer.scss" as *;
 </style>

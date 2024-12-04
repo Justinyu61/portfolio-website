@@ -129,5 +129,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/pruductCss/productItem";
+@use "@/assets/css/pruductCss/productItem.scss" as *;
 </style>

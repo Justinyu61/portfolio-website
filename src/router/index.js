@@ -1,25 +1,27 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '@/views/home/Home'
-import Trivia from '@/views/home/Trivia'
-import Login from '@/views/login/Login'
+import { createRouter, createWebHashHistory, createWebHistory  } from 'vue-router'
+import Home from '@/views/home/Home.vue'
+import Trivia from '@/views/home/Trivia.vue'
+import Login from '@/views/login/Login.vue'
 import Dashboard from '@/views/dashboard-backUser/Dashboard.vue'
 import Products from '@/views/dashboard-backUser/ProductControler/Products.vue'
 import Orders from '@/views/dashboard-backUser/orderConfirmation/Orders.vue'
 import Discount from '@/views/dashboard-backUser/discountPage/Discount.vue'
-import ProductBoard from '@/views/dashboard-frontUser/productPage/ProductBoard'
-import ProductIndex from '@/views/dashboard-frontUser/productPage/ProductPage'
-import ProductItem from '@/views/dashboard-frontUser/productPage/ProductItem'
+import ProductBoard from '@/views/dashboard-frontUser/productPage/ProductBoard.vue'
+import ProductIndex from '@/views/dashboard-frontUser/productPage/ProductPage.vue'
+import ProductItem from '@/views/dashboard-frontUser/productPage/ProductItem.vue'
 import CartBoard from '@/views/dashboard-frontUser/cartPage/CartBoard.vue'
-import CartPage from '@/views/dashboard-frontUser/cartPage/CartPage'
-import UserCheck from '@/views/dashboard-frontUser/cartPage/UserCheck'
-import FinalOrder from '@/views/dashboard-frontUser/cartPage/FinalOrder'
-import Brands from '@/views/dashboard-frontUser/productPage/Brands'
+import CartPage from '@/views/dashboard-frontUser/cartPage/CartPage.vue'
+import UserCheck from '@/views/dashboard-frontUser/cartPage/UserCheck.vue'
+import FinalOrder from '@/views/dashboard-frontUser/cartPage/FinalOrder.vue'
+import Brands from '@/views/dashboard-frontUser/productPage/Brands.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    beforeEnter: () => {
+    }
   },
   {
     path: '/trivia',
@@ -88,7 +90,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
   linkActiveClass: 'active'
 })

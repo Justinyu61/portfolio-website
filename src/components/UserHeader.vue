@@ -185,7 +185,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/userHeader/navbar";
-@import "src/assets/css/userHeader/miniCart";
-@import "src/assets/css/userHeader/header";
+@use "@/assets/css/userHeader/navbar.scss" as *;
+@use "@/assets/css/userHeader/miniCart.scss" as *;
+@use "@/assets/css/userHeader/header.scss" as *;
 </style>

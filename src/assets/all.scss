@@ -1,7 +1,7 @@
 //Required
-@import "~bootstrap/scss/functions";
+@import "bootstrap/scss/functions";
 @import "./helpers/variables";
-@import "~bootstrap/scss/mixins";
+@import "bootstrap/scss/mixins";
 @import "./helpers/reset";
 
 // Custom.scss
@@ -9,6 +9,6 @@
 
 // Include any default variable overrides here (though functions won't be available)
 
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 // Then add additional custom code here

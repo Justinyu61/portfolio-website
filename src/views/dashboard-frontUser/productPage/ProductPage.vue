@@ -109,6 +109,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/pruductCss/sameCssForproduct";
-@import "src/assets/css/pruductCss/producePage";
+@use "@/assets/css/pruductCss/sameCssForproduct.scss" as *;
+@use "@/assets/css/pruductCss/producePage.scss" as *;
 </style>

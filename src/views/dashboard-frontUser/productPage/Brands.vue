@@ -140,6 +140,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/pruductCss/sameCssForproduct";
-@import "src/assets/css/pruductCss/brand";
+@use "@/assets/css/pruductCss/sameCssForproduct.scss" as *;
+@use "@/assets/css/pruductCss/brand.scss" as *;
 </style>

@@ -1,4 +1,4 @@
-@import "src/assets/helpers/customVariables";
+@use "@/assets/helpers/customVariables.scss" as *;
 * {
   padding: 0;
   margin: 0;

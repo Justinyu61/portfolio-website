@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/cartCss/userCheck";
-@import "src/assets/css/cartCss/stepper";
-@import "src/assets/css/cartCss/sameCssForCart";
+@use "@/assets/css/cartCss/userCheck.scss" as *;
+@use "@/assets/css/CartCss/stepper.scss" as *;
+@use "@/assets/css/CartCss/sameCssForCart.scss" as *;
 </style>

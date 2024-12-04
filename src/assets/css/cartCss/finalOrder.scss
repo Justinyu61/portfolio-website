@@ -1,4 +1,4 @@
-@import "src/assets/helpers/customVariables";
+@use "@/assets/helpers/customVariables.scss" as *;
 .form-place {
   margin: 50px 0 ;
   @media screen and (max-width: 768px) {

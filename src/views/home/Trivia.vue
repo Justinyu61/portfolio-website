@@ -72,5 +72,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/css/home/tirvia";
+@use "@/assets/css/home/tirvia.scss" as *;
 </style>
