@@ -136,8 +136,7 @@ export default {
   name: 'Home-view',
   data () {
     return {
-      brandDiptyque: [],
-      brandBamford: [],
+      brand: [],
       brandMZ: []
     }
   },
@@ -151,12 +150,14 @@ export default {
       this.$http.get(getProductsApi)
         .then((res) => {
           // console.log(res) // ok
-          this.brandDiptyque = res.data.products.filter((products) => products.category === 'diptyque')
-          this.brandDiptyque = res.data.products.filter((products) => products.category === 'bamford')
-          this.brandDiptyque = res.data.products.filter((products) => products.category === 'MALIN+GOETZ')
-          this.brandDiptyque = res.data.products.filter((products) => products.category === 'BYREDO')
-          this.brandDiptyque = res.data.products.filter((products) => products.category === 'KERZON')
-          this.brandDiptyque = res.data.products.filter((products) => products.category === 'FLORAÏKU')
+          this.brand = {
+            diptyque: res.data.products.filter((products) => products.category === 'diptyque'),
+            bamford: res.data.products.filter((products) => products.category === 'bamford'),
+            malinGoetz: res.data.products.filter((products) => products.category === 'MALIN+GOETZ'),
+            byredo: res.data.products.filter((products) => products.category === 'BYREDO'),
+            kerzon: res.data.products.filter((products) => products.category === 'KERZON'),
+            floraiku: res.data.products.filter((products) => products.category === 'FLORAÏKU'),
+          }
           this.isLoading = false
         })
     }

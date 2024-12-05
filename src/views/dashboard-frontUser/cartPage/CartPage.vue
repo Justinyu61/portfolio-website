@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="cartStore.isLoading"></Loading>
   <div class="wrap">
     <div class="container">
       <h2>購物車</h2>
@@ -23,7 +23,7 @@
       </ul>
     </div>
     <div class="cartBody">
-      <div class="product-table" v-for="item in cart.carts" :key="item.id">
+      <div class="product-table" v-for="item in cartStore.cartList.carts" :key="item.id">
 <!--        <button type="button" class="btn btn-outline-danger btn-sm cancel-btn" @click="removeCartItem(item.id)">-->
 <!--          <i class="bi bi-x"></i>-->
 <!--        </button>-->
@@ -34,11 +34,11 @@
           <h3>{{ item.product.title }}</h3>
         </div>
         <div class="product-qty">
-          <button class="btn" @click="minus(item)">
+          <button class="btn" @click="cartStore.minus(item)">
             <font-awesome-icon :icon="['fas', 'minus']"/>
           </button>
-          <input type="number" min="1" v-model="item.qty" @change="updateCartItem(item)">
-          <button class="btn" @click="plus(item)">
+          <input type="number" min="1" v-model="item.qty" @change="cartStore.updateCartItem(item)">
+          <button class="btn" @click="cartStore.plus(item)">
             <font-awesome-icon :icon="['fas', 'plus']"/>
           </button>
         </div>
@@ -48,28 +48,28 @@
           <small v-if="item.coupon" class="text-success">折扣價：</small>
             小計: ${{ $filters.currency(item.final_total)}}元
         </div>
-        <button type="button" class="cart-del"  :disabled="this.status.loadingItem === item.id" @click="removeCartItem(item.id)">
-          <font-awesome-icon :icon="['fas', 'spinner']" v-if="this.status.loadingItem === item.id"/>
+        <button type="button" class="cart-del"  :disabled="cartStore.status.loadingItem === item.id" @click="cartStore.removeCartItem(item.id)">
+          <font-awesome-icon :icon="['fas', 'spinner']" v-if="cartStore.status.loadingItem === item.id"/>
           <font-awesome-icon :icon="['fas', 'trash-can']" v-else/>
         </button>
       </div>
       </div>
       <div class="input-group mb-3 input-group-sm">
-        <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
+        <input type="text" class="form-control" v-model="cartStore.couponCode" placeholder="請輸入優惠碼">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
+          <button class="btn btn-outline-secondary" type="button" @click="cartStore.addCouponCode">
             套用優惠碼
           </button>
         </div>
       </div>
       <div class="total-price">
-        <div class="discount" v-if="cart.final_total !== cart.total">
-        <h4>總計: ${{ $filters.currency(cart.total) }}元</h4>
+        <div class="discount" v-if="cartStore.cartList.final_total !== cartStore.cartList.total">
+        <h4>總計: ${{ $filters.currency(cartStore.cartList.total) }}元</h4>
         <strong>
-          折扣後: ${{ $filters.currency(cart.final.total) }}元
+          折扣後: ${{ $filters.currency(cartStore.cartList.final.total) }}元
         </strong>
           </div>
-        <h4>總計: ${{ $filters.currency(cart.total) }}元</h4>
+        <h4>總計: ${{ $filters.currency(cartStore.cartList.total) }}元</h4>
       </div>
     </div>
     <div class="linkBtn">
@@ -80,89 +80,10 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CartPage',
-  data () {
-    return {
-      isLoading: false,
-      cart: {},
-      status: {
-        loadingItem: ''// 讀取效果
-      },
-      coupon_code: ''
-    }
-  },
-  methods: {
-    getCart () {
-      const getCartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      this.isLoading = true
-      this.$http.get(getCartApi)
-        .then((res) => {
-          if (res.data.data.carts.length !== 0) {
-            // console.log('getCart:', res.data.data)
-            this.cart = res.data.data
-            this.isLoading = false
-          } else {
-            this.$router.push('/products/productsIndex')
-          }
-        })
-    },
-    removeCartItem (id) {
-      this.status.loadingItem = id
-      const deleteItemApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
-      this.isLoading = true
-      this.$http.delete(deleteItemApi)
-        .then((res) => {
-          // console.log('deleteItem', res)
-          this.$httpMsgState(res, '產品移除')
-          this.isLoading = false
-          this.status.loadingItem = ''
-          this.getCart()
-        })
-    },
-    minus (item) {
-      item.qty -= 1
-      this.updateCartItem(item)
-    },
-    plus (item) {
-      item.qty += 1
-      this.updateCartItem(item)
-    },
-    updateCartItem (item) {
-      const updateCartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
-      this.isLoading = true
-      this.status.loadingItem = item.id
-      const cart = {
-        product_id: item.product_id,
-        qty: item.qty
-      }
-      this.$http.put(updateCartApi, { data: cart })
-        .then((res) => {
-          // console.log('update', res)
-          this.status.loadingItem = ''
-          this.getCart()
-        })
-    },
-    addCouponCode () {
-      const addCouponCodeApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
-      const couponCode = {
-        code: this.coupon_code
-      }
-      this.isLoading = true
-      this.$http.post(addCouponCodeApi, { data: couponCode })
-        .then((res) => {
-          // console.log('coupon', res)
-          this.$httpMsgState(res, '加入優惠券')
-          this.getCart()
-          this.isLoading = false
-        })
-    }
-  },
-  created () {
-    this.getCart()
-  }
-}
+<script setup>
+import { useCartStore } from '@/stores/cartStore'
+const cartStore = useCartStore()
+cartStore.getCart()
 </script>
 
 <style lang="scss" scoped>
