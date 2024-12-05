@@ -72,7 +72,7 @@ export default {
   methods: {
     getOrders (Page = 1) {
       this.currentPage = Page
-      const orderApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${Page}`
+      const orderApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/orders?page=${Page}`
       // console.log(orderApi)
       this.isLoading = true
       this.$http.get(orderApi)
@@ -98,7 +98,7 @@ export default {
     },
     updatePaid (item) {
       this.isLoading = true
-      const updateOrderApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`
+      const updateOrderApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/order/${item.id}`
       const paid = {
         is_paid: item.is_paid
       }
@@ -110,7 +110,7 @@ export default {
         })
     },
     deleteOrder () {
-      const deleteOrderApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`
+      const deleteOrderApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/order/${this.tempOrder.id}`
       this.$http.delete(deleteOrderApi)
         .then((res) => {
           const deleteComponent = this.$refs.deleteModal

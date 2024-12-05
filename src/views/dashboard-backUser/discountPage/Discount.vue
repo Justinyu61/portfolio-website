@@ -84,7 +84,7 @@ export default {
     },
     getCoupons (page = 1) {
       this.isLoading = true
-      const CouponsApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`
+      const CouponsApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/coupons?page=${page}`
       this.$http.get(CouponsApi, this.tempDiscount)
         .then((res) => {
           // console.log(res)
@@ -95,7 +95,7 @@ export default {
     },
     updateCoupon (tempDiscount) {
       if (this.isNew) {
-        const createCouponApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`
+        const createCouponApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/coupon`
         this.$http.post(createCouponApi, { data: tempDiscount })
           .then((res) => {
             // console.log(res, tempDiscount)
@@ -104,7 +104,7 @@ export default {
             this.$refs.couponModal.hideModal()
           })
       } else {
-        const resetCouponApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempDiscount.id}`
+        const resetCouponApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/coupon/${this.tempDiscount.id}`
         this.$http.put(resetCouponApi, { data: tempDiscount })
           .then((res) => {
             // console.log(res)
@@ -120,7 +120,7 @@ export default {
       deleteComponent.showModal()
     },
     deleteCoupon () {
-      const deleteCouponsApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempDiscount.id}`
+      const deleteCouponsApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/coupon/${this.tempDiscount.id}`
       this.isLoading = true
       this.$http.delete(deleteCouponsApi)
         .then((res) => {

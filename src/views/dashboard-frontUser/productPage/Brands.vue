@@ -45,6 +45,12 @@
   </div>
 </template>
 
+<script setup>
+import { useCartStore } from '@/stores/cartStore'
+const cartStore = useCartStore()
+cartStore.getCart()
+</script>
+
 <script>
 
 import emitter from '@/methods/getEmitter'
@@ -72,7 +78,7 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
-      const getProductItemApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`
+      const getProductItemApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products?page=${page}`
       // console.log('id:', this.id)
       this.isLoading = true
       this.$http.get(getProductItemApi)
@@ -88,7 +94,7 @@ export default {
         })
     },
     filterBrands () {
-      const getProductsApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
+      const getProductsApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products/all`
       this.isLoading = true
       this.$http.get(getProductsApi)
         .then((res) => {
@@ -108,7 +114,7 @@ export default {
       // console.log('index:', id)
     },
     addToCart (id, qty = 1) {
-      const addToCartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      const addToCartApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
       this.isLoading = true
       const toCary = { product_id: id, qty }
       this.$http.post(addToCartApi, { data: toCary })
@@ -121,7 +127,7 @@ export default {
         })
     },
     getCart () {
-      const getCartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      const getCartApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
       this.isLoading = true
       this.$http.get(getCartApi)
         .then((res) => {

@@ -80,7 +80,7 @@ export default {
   // },
   // methods: {
   //   signIn () {
-  //     const loginApi = `${process.env.VUE_APP_API}admin/signin`
+  //     const loginApi = `${import.meta.env.VITE_API}admin/signin`
   //     // console.log(loginApi)
   //     this.$http.post(loginApi, this.user)
   //       .then((res) => {

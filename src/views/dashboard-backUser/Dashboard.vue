@@ -19,7 +19,7 @@ export default {
   },
   created () {
     this.$http.defaults.headers.common.Authorization = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    const customerApi = `${process.env.VUE_APP_API}api/user/check`
+    const customerApi = `${import.meta.env.VITE_API}api/user/check`
     // console.log(customerApi)
     this.$http.post(customerApi, this.user)
       .then((res) => {

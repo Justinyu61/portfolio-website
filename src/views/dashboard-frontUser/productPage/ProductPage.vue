@@ -59,7 +59,9 @@ export default {
   inject: ['emitter'],
   methods: {
     getProducts () {
-      const getProductsApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
+      const getProductsApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products/all`
+      console.warn('eee',import.meta.env.VITE_API);
+
       this.isLoading = true
       this.$http.get(getProductsApi)
         .then((res) => {
@@ -69,7 +71,7 @@ export default {
         })
     },
     getCart () {
-      const getCartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      const getCartApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
       this.isLoading = true
       this.$http.get(getCartApi)
         .then((res) => {
@@ -85,7 +87,7 @@ export default {
     addToCart (id) {
       // console.log(id)
       this.isLoading = true
-      const CartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      const CartApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
       this.status.loadingItem = id
       const cart = {
         product_id: id,

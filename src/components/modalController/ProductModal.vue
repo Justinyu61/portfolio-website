@@ -193,7 +193,7 @@ export default {
       // console.dir(uploadFile)
       const formData = new FormData()
       formData.append('file-to-upload', uploadFile)
-      const fileUploadUrl = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+      const fileUploadUrl = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/upload`
       const urlUploadPlace = this.$refs.fileInput.id
       // console.log(fileUploadUrl)
       this.$http.post(fileUploadUrl, formData)

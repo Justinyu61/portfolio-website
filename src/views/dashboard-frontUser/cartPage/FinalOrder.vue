@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     getOrder () {
-      const getOrder = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${this.orderId}`
+      const getOrder = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/order/${this.orderId}`
       this.$http.get(getOrder)
         .then((res) => {
           if (res.data.success) {
@@ -105,7 +105,7 @@ export default {
         })
     },
     payOrder () {
-      const payOrder = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.orderId}`
+      const payOrder = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/pay/${this.orderId}`
       this.isLoading = true
       this.$http.post(payOrder)
         .then((res) => {

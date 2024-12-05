@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
-      const productsApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
+      const productsApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/products?page=${page}`
       // console.log(productsApi)
       this.isLoading = true
       this.$http.get(productsApi)
@@ -105,13 +105,13 @@ export default {
       this.tempProduct = item
       // console.log(this.tempProduct)
       // 新增
-      let updateProductsApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
+      let updateProductsApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
       // console.log(updateProductsApi)
       let httpMethod = 'post'
       this.isLoading = true
       // 編輯
       if (!this.isNew) {
-        updateProductsApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
+        updateProductsApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${item.id}`
         httpMethod = 'put'
         this.isLoading = true
       }
@@ -132,7 +132,7 @@ export default {
       deleteComponent.showModal()
     },
     deleteProduct () {
-      const deleteProductApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
+      const deleteProductApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${this.tempProduct.id}`
       this.$http.delete(deleteProductApi)
         .then((res) => {
           // console.log(res.data)

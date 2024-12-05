@@ -9,7 +9,7 @@ import process from 'process'
 export default defineConfig({
   // plugins: [vue()]  // 移除 vueDevTools 測試
   plugins: [vue(), vueDevTools()],
-  base: '/',
+  base: '/portfolio-website/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     getProduct () {
-      const getProductItemApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`
+      const getProductItemApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/product/${this.id}`
       // console.log('id:', this.id)
       this.isLoading = true
       this.$http.get(getProductItemApi)
@@ -97,7 +97,7 @@ export default {
       this.$router.push('/products/productsIndex')
     },
     addToCart (id, qty = 1) {
-      const addToCartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      const addToCartApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
       this.isLoading = true
       const toCary = { product_id: id, qty }
       this.$http.post(addToCartApi, { data: toCary })
@@ -110,7 +110,7 @@ export default {
         })
     },
     getCart () {
-      const getCartApi = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      const getCartApi = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
       this.isLoading = true
       this.$http.get(getCartApi)
         .then((res) => {

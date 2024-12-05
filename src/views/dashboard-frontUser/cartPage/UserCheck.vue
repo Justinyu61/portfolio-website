@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     createOrder () {
-      const postOrder = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`
+      const postOrder = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/order`
       this.isLoading = false
       const order = this.form
       this.$http.post(postOrder, { data: order })

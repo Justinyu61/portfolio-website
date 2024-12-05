@@ -18,7 +18,7 @@ export default {
   name: 'Navbar-view',
   methods: {
     logout () {
-      const logoutApi = `${process.env.VUE_APP_API}logout`
+      const logoutApi = `${import.meta.env.VITE_API}logout`
       // console.log(logoutApi)
       this.$http.post(logoutApi, this.user)
         .then((res) => {
