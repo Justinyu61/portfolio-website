@@ -2,29 +2,15 @@
   <div class="position-relative ">
     <ToastMessages></ToastMessages>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
-<script>
+<script setup>
 import emitter from '@/methods/getEmitter'
 import ToastMessages from '@/components/toastMessageController/ToastMessages.vue'
+import { provide } from 'vue';
 
-export default {
-  name: 'ProductBoard',
-  components: {
-    ToastMessages
-  },
-  provide () {
-    // 內層元件都能用外層的功能+inject
-    return {
-      emitter
-    }
-  },
-  created () {
-  }
-}
+provide('emitter', emitter)
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

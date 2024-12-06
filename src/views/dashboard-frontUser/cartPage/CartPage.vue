@@ -25,8 +25,8 @@
       <div class="cartBody">
         <div class="product-table" v-for="item in cartStore.cartList" :key="item.id">
           <!-- <button type="button" class="btn btn-outline-danger btn-sm cancel-btn" @click="removeCartItem(item.id)">
-         <i class="bi bi-x"></i>
-       </button> -->
+            <i class="bi bi-x"></i>
+          </button> -->
           <div class="product-img">
             <img v-if="item.product.imageUrl" :src="item.product.imageUrl" alt="">
             <p v-else>No image available</p>
@@ -50,7 +50,7 @@
               小計: ${{ $filters.currency(item.final_total) }}元
             </div>
             <button type="button" class="cart-del" :disabled="cartStore.status.loadingItem === item.id"
-              @click="cartStore.removeCartItem(item.id)">
+              @click="cartStore.deleteCartItem(item.id)">
               <font-awesome-icon :icon="['fas', 'spinner']" v-if="cartStore.status.loadingItem === item.id" />
               <font-awesome-icon :icon="['fas', 'trash-can']" v-else />
             </button>

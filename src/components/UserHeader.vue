@@ -60,7 +60,7 @@
                   </div>
                   <div class="cart-footer" v-if="cartStore.cartLength !== 0">
                     <h4>小計</h4>
-                    <h5>$ {{ $filters.currency(cartStore.cartList.total) }}</h5>
+                    <h5>$ {{ $filters.currency(cartStore.total) }}</h5>
                   </div>
                   <div class="cart-checkout" v-if="cartStore.cartLength !== 0" @click="cartCheckout">
                     <router-link to="/cart/cartPage">
@@ -144,7 +144,7 @@ const hideNenu = () => {
 
 onMounted(() => {
   cartStore.getCart();
-  emitter.on('updateCart', updateCartHandler);
+  emitter.on('updateCartItem', updateCartHandler);
   window.addEventListener('resize', screenSize);
 })
 

@@ -7,7 +7,7 @@
     </div>
     <div class="container">
     <div class="showProduct ">
-      <template v-for="item in products" :key="item.id">
+      <template v-for="item in productStore.products" :key="item.id">
       <div class="showProduct__card">
         <div class="showProduct__card--img">
         <a href="#" @click.prevent="viewMore(item.id)">
@@ -30,7 +30,7 @@
             查看更多
           </button>
           <button type="button" class="addCart btn btn-outline-secondary" @click="addToCart(item.id)">
-            <font-awesome-icon class="spinner-color" :icon="['fas', 'spinner']" v-if="this.status.loadingItem === item.id"/>
+            <font-awesome-icon class="spinner-color" :icon="['fas', 'spinner']" v-if="productStore.status.loadingItem === item.id"/>
             <i class="bi bi-cart2" v-else></i>
             加到購物車
           </button>
@@ -42,7 +42,31 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { useCartStore } from '@/stores/cartStore';
+import { useProductStore } from '@/stores/productStore';
+import emitter from '@/methods/getEmitter';
+import { useRouter } from 'vue-router';
+
+const cartStore = useCartStore();
+const productStore = useProductStore();
+
+const addToCart = (id) => {
+  cartStore.addToCart(id, 1, emitter);  // 传递 emitter
+}
+
+const viewMore = (id) => {
+  console.warn(id);
+
+  const router = useRouter();
+  router.push(`/products/product/${id}`);
+}
+
+cartStore.getCart();
+productStore.getAllProducts();
+</script>
+
+<!-- <script>
 import emitter from '@/methods/getEmitter'
 
 export default {
@@ -108,7 +132,7 @@ export default {
     this.getCart()
   }
 }
-</script>
+</script> -->
 
 <style lang="scss" scoped>
 @use "@/assets/css/pruductCss/sameCssForproduct.scss" as *;

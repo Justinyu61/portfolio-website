@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { toRaw } from 'vue';
+import mitt from 'mitt';
 import {
   getCart,
   addToCart,
@@ -7,6 +7,8 @@ import {
   updateCartItem,
   applyCoupon,
 } from "@/api/cartApi";
+
+const emitter = mitt(); // 創建 emitter 或注入
 
 export const useCartStore = defineStore("cartStore", {
   state: () => ({
@@ -21,7 +23,7 @@ export const useCartStore = defineStore("cartStore", {
   }),
   getters: {
     cartLength() {
-      return this.cartList?.carts?.length || 0;
+      return this.cartList?.length || 0;
     },
   },
   actions: {
@@ -46,18 +48,15 @@ export const useCartStore = defineStore("cartStore", {
     },
     async getCart() {
       this.setLoading();
-
       try {
         const res = await getCart();
         const { carts, total, final_total } = res.data.data;
-        if (carts.length !== 0) {
           this.cartList = carts;
           this.total = total;
           this.finalTotal = final_total;
           this.isLoading = false;
-        }
       } catch (error) {
-        // handlerErrorMsg("購物車為空，請重定向到產品頁");
+        // this.handlerErrorMsg("購物車為空，請重定向到產品頁");
       } finally {
         this.isLoading = false;
       }
@@ -67,21 +66,23 @@ export const useCartStore = defineStore("cartStore", {
       const payload = { product_id: id, qty };
       try {
         const res = await addToCart(payload);
+        await this.getCart();
+
         if (res.data.success) {
-          this.updateCart(payload);
+          this.updateCartItem(res.data);
         }
         this.cleanLoading();
       } catch (error) {
-        handlerErrorMsg("加入購物車項目失敗:", error);
+        this.handlerErrorMsg("加入購物車項目失敗:", error);
       }
     },
     async deleteCartItem(id) {
       this.setLoading(id);
       try {
         await deleteCartItem(id);
-        this.getCart();
+        await this.getCart();
       } catch (error) {
-        handlerErrorMsg("移除購物車項目失敗:", error);
+        this.handlerErrorMsg("移除購物車項目失敗:", error);
       } finally {
         this.cleanLoading();
       }
@@ -94,9 +95,9 @@ export const useCartStore = defineStore("cartStore", {
       };
       try {
         await updateCartItem(item.id, cart);
-        this.getCart();
+        await this.getCart();
       } catch (error) {
-        handlerErrorMsg("更新購物車項目失敗:", error);
+        this.handlerErrorMsg("更新購物車項目失敗:", error);
       } finally {
         this.cleanLoading();
       }
@@ -110,7 +111,7 @@ export const useCartStore = defineStore("cartStore", {
         await applyCoupon(couponCode);
         this.getCart();
       } catch (error) {
-        handlerErrorMsg("加入優惠券失敗:", error);
+        this.handlerErrorMsg("加入優惠券失敗:", error);
       } finally {
         this.isLoading = false;
       }
