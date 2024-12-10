@@ -6,7 +6,7 @@ export const getAllProducts = async () => {
   return apiHelper(() => axios.get(`${API_BASE}/products/all`));
 };
 
-export const getProductByItem = async (id) => {
+export const getProductById = async (id) => {
   return apiHelper(() => axios.get(`${API_BASE}/product/${id}`));
 };
 

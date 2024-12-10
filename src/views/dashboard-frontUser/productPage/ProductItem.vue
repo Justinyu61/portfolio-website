@@ -1,10 +1,10 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="productStore.isLoading"></Loading>
   <div class="wrap">
     <div class="container">
       <div class="productItem">
     <div class="product-img">
-        <img :src="product.imageUrl" alt="">
+        <img :src="productStore.product.imageUrl" alt="">
     </div>
     <div class="product__info">
 <!--      <h2>{{ product.category }}</h2>品牌1-->
@@ -25,29 +25,29 @@
 <!--                </button>-->
 <!--      </div>-->
       <div class="product__info--category">
-        <h2>{{ product.category }}</h2>
+        <h2>{{ productStore.product.category }}</h2>
       </div>
       <div class="product__info--title">
-        <p>{{ product.title }}</p>
+        <p>{{ productStore.product.title }}</p>
       </div>
       <div class="product__info--originPrice">
-        <h4>NT$ {{ product.origin_price }} 元</h4>
+        <h4>NT$ {{ productStore.product.origin_price }} 元</h4>
       </div>
-      <div class="product__info--btnPlace" v-if="product.price">
+      <div class="product__info--btnPlace" v-if="productStore.product.price">
         <button type="button" class="btn btn-outline-secondary" @click="returnProducts">
           返回商品頁
         </button>
-        <button type="button" class="btn btn-outline-danger " @click="addToCart(product.id)">
+        <button type="button" class="btn btn-outline-danger " @click="addToCart(productStore.product.id)">
           加到購物車
         </button>
       </div>
       <div class="product__info--description">
         <h2>商品介紹:</h2>
-        <h3>{{ product.description }}</h3>
+        <h3>{{ productStore.product.description }}</h3>
       </div>
       <div class="product__info--content">
         <h2>主要成分:</h2>
-        <h3>{{ product.content }}</h3>
+        <h3>{{ productStore.product.content }}</h3>
       </div>
     </div>
     </div>
@@ -55,7 +55,39 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, provide } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useProductStore } from '@/stores/productStore'
+import { useCartStore } from '@/stores/cartStore'
+import emitter from '@/methods/getEmitter'
+
+const route = useRoute();
+const router = useRouter();
+const productStore = useProductStore();
+const cartStore = useCartStore();
+
+const paramsId = route.params.productId;
+
+provide('emitter', emitter);
+
+const addToCart = (id) => {
+  cartStore.addToCart(id, 1, emitter);  // 传递 emitter
+}
+const returnProducts = () => {
+  router.push('/products/productsIndex')
+}
+
+//掛載
+onMounted(() => {
+  productStore.getProductById(paramsId);
+  cartStore.getCart();
+})
+
+
+</script>
+
+<!-- <script>
 import emitter from '@/methods/getEmitter'
 
 export default {
@@ -126,7 +158,7 @@ export default {
     this.getCart()
   }
 }
-</script>
+</script> -->
 
 <style lang="scss" scoped>
 @use "@/assets/css/pruductCss/productItem.scss" as *;

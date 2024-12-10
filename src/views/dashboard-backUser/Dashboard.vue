@@ -1,40 +1,43 @@
 <template>
-    <Navbar></Navbar>
+  <Navbar></Navbar>
   <div class="container-fluid  position-relative">
     <ToastMessages></ToastMessages>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
-<script>
-import Navbar from '@/components/AdminHeader.vue'
-import emitter from '@/methods/getEmitter'
-import ToastMessages from '@/components/toastMessageController/ToastMessages.vue'
+<script setup>
+import { onMounted, provide } from 'vue';
+import emitter from '@/methods/getEmitter';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import Navbar from '@/components/AdminHeader.vue';
+import ToastMessages from '@/components/toastMessageController/ToastMessages.vue';
 
-export default {
-  name: 'Dashboard-view',
-  components: {
-    Navbar,
-    ToastMessages
-  },
-  created () {
-    this.$http.defaults.headers.common.Authorization = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    const customerApi = `${import.meta.env.VITE_API}api/user/check`
-    // console.log(customerApi)
-    this.$http.post(customerApi, this.user)
-      .then((res) => {
-        // console.log(res)
-        if (!res.data.success) {
-          this.$router.push('/login')
-        }
-      })
-  },
-  provide () {
-    return {
-      emitter
-    }
-  }
-}
+const router = useRouter();
+
+provide('emitter', emitter);
+
+onMounted(() => {
+  //設置全局的 Authorization 請求頭
+  axios.defaults.headers.common.Authorization = document.cookie.replace(
+    /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+    '$1'
+  );
+
+  const customerApi = `${import.meta.env.VITE_API}api/user/check`;
+
+  axios
+    .post(customerApi)
+    .then((res) => {
+      if (!res.data.success) {
+        router.push('/login');
+      }
+    })
+    .catch((err) => {
+      console.error('验证用户失败:', err);
+    });
+})
 </script>
 
 <style lang="scss" scoped>

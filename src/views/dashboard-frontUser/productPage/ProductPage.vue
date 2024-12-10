@@ -50,15 +50,13 @@ import { useRouter } from 'vue-router';
 
 const cartStore = useCartStore();
 const productStore = useProductStore();
+const router = useRouter();
 
 const addToCart = (id) => {
   cartStore.addToCart(id, 1, emitter);  // 传递 emitter
 }
 
 const viewMore = (id) => {
-  console.warn(id);
-
-  const router = useRouter();
   router.push(`/products/product/${id}`);
 }
 

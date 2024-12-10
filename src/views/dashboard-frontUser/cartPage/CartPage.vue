@@ -88,8 +88,11 @@
 
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
+import { onMounted } from 'vue';
 const cartStore = useCartStore()
-cartStore.getCart()
+onMounted(() => {
+  cartStore.getCart()
+})
 </script>
 
 <style lang="scss" scoped>
